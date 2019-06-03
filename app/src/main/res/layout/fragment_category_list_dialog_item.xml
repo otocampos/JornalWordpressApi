@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="NamespaceTypo">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="news"
+            type="br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium" />
+    </data>
+
+    <TextView
+        android:id="@+id/tituloCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{news.slug}"
+        android:background="?attr/selectableItemBackground"
+        android:paddingLeft="@dimen/list_item_spacing"
+        android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingRight="@dimen/list_item_spacing"
+        android:paddingBottom="@dimen/list_item_spacing_half"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+</layout>

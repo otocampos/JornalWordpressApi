@@ -19,15 +19,16 @@ public interface ApiService {
     Single<Response<List<Categorium>>> getAllCategories();
 
 
-    @GET(Constantes.CATEGORIES)
-    Single<Response<List<Categorium>>> getCategoriaBySlug(@Query(Constantes.CATEGORY_BY_SLUG) String slug);
+   /* @GET(Constantes.CATEGORIES)
+    Single<Response<List<Categorium>>> getCategoriaBySlug(@Query(Constantes.CATEGORY_BY_SLUG) String slug);*/
 
-/*
+
     @GET(Constantes.CATEGORIES)
-    Observable<List<Categorium>> getCategoriaBySlug(@Query(Constantes.CATEGORY_BY_SLUG) String slug);*/
+    Observable<List<Categorium>> getCategoriaBySlug(@Query(Constantes.CATEGORY_BY_SLUG) String slug);
 
     @GET(Constantes.CATEGORIES)
     Observable<List<Categorium>> getCategoriaByParent(@Query(Constantes.CATEGORY_BY_PARENT) int parent);
 
 
 }
+

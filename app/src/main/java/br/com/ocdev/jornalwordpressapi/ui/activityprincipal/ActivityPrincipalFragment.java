@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
 
+import br.com.ocdev.jornalwordpressapi.Constantes.Constantes;
 import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
 import br.com.ocdev.jornalwordpressapi.R;
 
@@ -38,22 +40,11 @@ public class ActivityPrincipalFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ActivityPrincipalViewModel.class);
-        ViewModelGetCategorias();
         // TODO: Use the ViewModel
     }
 
 
-    public void ViewModelGetCategorias() {
-        mViewModel.getNews().observe(this, new Observer<List<Categorium>>() {
-            @Override
-            public void onChanged(@Nullable List<Categorium> responseCategorias) {
-                // define an adapter
-                for (int i = 0; i < responseCategorias.size(); i++)
-                    Log.v("teste", responseCategorias.get(i).getSlug());
 
-            }
-        });
     }
 
-}
+

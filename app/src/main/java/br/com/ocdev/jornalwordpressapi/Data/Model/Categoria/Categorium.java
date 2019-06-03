@@ -2,13 +2,16 @@
 package br.com.ocdev.jornalwordpressapi.Data.Model.Categoria;
 
 import java.util.List;
+
+import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Categorium implements Parcelable
+public class Categorium extends BaseObservable implements Parcelable
 {
 
     @SerializedName("id")
@@ -80,6 +83,8 @@ public class Categorium implements Parcelable
 
     public void setId(Integer id) {
         this.id = id;
+        notifyPropertyChanged(BR.news);
+
     }
 
     public Integer getCount() {
@@ -88,6 +93,7 @@ public class Categorium implements Parcelable
 
     public void setCount(Integer count) {
         this.count = count;
+        notifyPropertyChanged(BR.news);
     }
 
     public String getDescription() {
@@ -96,6 +102,7 @@ public class Categorium implements Parcelable
 
     public void setDescription(String description) {
         this.description = description;
+        notifyPropertyChanged(BR.news);
     }
 
     public String getLink() {
@@ -104,6 +111,7 @@ public class Categorium implements Parcelable
 
     public void setLink(String link) {
         this.link = link;
+        notifyPropertyChanged(BR.news);
     }
 
     public String getName() {
@@ -112,6 +120,7 @@ public class Categorium implements Parcelable
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.news);
     }
 
     public String getSlug() {
@@ -120,6 +129,7 @@ public class Categorium implements Parcelable
 
     public void setSlug(String slug) {
         this.slug = slug;
+        notifyPropertyChanged(BR.news);
     }
 
     public String getTaxonomy() {
@@ -128,6 +138,7 @@ public class Categorium implements Parcelable
 
     public void setTaxonomy(String taxonomy) {
         this.taxonomy = taxonomy;
+        notifyPropertyChanged(BR.news);
     }
 
     public Integer getParent() {
@@ -136,6 +147,7 @@ public class Categorium implements Parcelable
 
     public void setParent(Integer parent) {
         this.parent = parent;
+        notifyPropertyChanged(BR.news);
     }
 
     public List<Object> getMeta() {
@@ -144,6 +156,7 @@ public class Categorium implements Parcelable
 
     public void setMeta(List<Object> meta) {
         this.meta = meta;
+        notifyPropertyChanged(BR.news);
     }
 
     public Links getLinks() {
@@ -152,6 +165,7 @@ public class Categorium implements Parcelable
 
     public void setLinks(Links links) {
         this.links = links;
+        notifyPropertyChanged(BR.news);
     }
 
     public void writeToParcel(Parcel dest, int flags) {
