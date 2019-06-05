@@ -13,34 +13,34 @@ import com.android.databinding.library.baseAdapters.BR;
 
 import java.util.List;
 
-import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
+import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post;
 import br.com.ocdev.jornalwordpressapi.R;
 
 
 //TUTORIAL 
 
 
-public class RecyclerViewNoticiasAdapter extends RecyclerView.Adapter<RecyclerViewNoticiasAdapter.MyViewHolder> {
-    private List<Categorium> data;
+public class RecyclerViewPostsAdapter extends RecyclerView.Adapter<RecyclerViewPostsAdapter.MyViewHolder> {
+    private List<Post> data;
     Context context;
     private OnClickNoticia onClickNoticia;
 
 
     public interface OnClickNoticia {
-        void getDetalhesNoticias(Categorium article);
+        void getDetalhesNoticias(Post article);
     }
 
 
-    public RecyclerViewNoticiasAdapter(OnClickNoticia onClickNoticia) {
+    public RecyclerViewPostsAdapter(OnClickNoticia onClickNoticia) {
         this.onClickNoticia = onClickNoticia;
     }
 
 
     @NonNull
     @Override
-    public RecyclerViewNoticiasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public RecyclerViewPostsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_category_list_dialog_item, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.recycler_view_item_noticias, parent, false);
         context = parent.getContext();
 
 
@@ -49,9 +49,9 @@ public class RecyclerViewNoticiasAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewNoticiasAdapter.MyViewHolder holder, int position) {
-        final Categorium categorium = data.get(position);
-        holder.bind(categorium);
+    public void onBindViewHolder(@NonNull RecyclerViewPostsAdapter.MyViewHolder holder, int position) {
+        final Post post = data.get(position);
+        holder.bind(post);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,7 @@ public class RecyclerViewNoticiasAdapter extends RecyclerView.Adapter<RecyclerVi
 
     }
 
-    public void setCategoriaData(List<Categorium> data) {
+    public void setCategoriaData(List<Post> data) {
         this.data = data;
     }
 

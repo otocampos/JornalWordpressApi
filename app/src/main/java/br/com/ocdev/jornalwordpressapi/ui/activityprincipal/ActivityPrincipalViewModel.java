@@ -8,22 +8,26 @@ import android.util.Log;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import br.com.ocdev.jornalwordpressapi.Constantes.Constantes;
 import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
+import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post;
 import br.com.ocdev.jornalwordpressapi.Data.Rest.ApiService;
 import br.com.ocdev.jornalwordpressapi.Utils.ApiFactory;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class ActivityPrincipalViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
     private static MutableLiveData<List<Categorium>> CategoriaList;
+    private static MutableLiveData<List<Post>> PostsList;
     public final MutableLiveData<String> categoria = new MutableLiveData();
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -46,8 +50,29 @@ public class ActivityPrincipalViewModel extends ViewModel {
         return CategoriaList;
     }
 
-    public void loadNews() {
+    public void loadPosts() {
+        Single<Response<List<Post>>> testObservable = ApiFactory.getRequestApi().getAllPosts();
+        testObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<List<Post>>>() {
 
+
+                               @Override
+                               public void onSubscribe(Disposable d) {
+
+                               }
+
+                               @Override
+                               public void onSuccess(Response<List<Post>> value) {
+                                   PostsList.setValue(value.body());
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   Log.v("testerro", e.getMessage());
+                               }
+                           }
+                );
 
 
     }
@@ -125,6 +150,41 @@ public class ActivityPrincipalViewModel extends ViewModel {
                 .timeout(10, TimeUnit.SECONDS);
 
     }
+
+
+    public LiveData<List<Post>> getNews() {
+        //if the list is null
+        if (PostsList == null) {
+            PostsList = new MutableLiveData<>();
+
+
+            //we will load it asynchronously from server in this method
+            loadPosts();
+        }
+
+        return PostsList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

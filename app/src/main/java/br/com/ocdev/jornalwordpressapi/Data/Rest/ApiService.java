@@ -5,9 +5,11 @@ import java.util.List;
 
 import br.com.ocdev.jornalwordpressapi.Constantes.Constantes;
 import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
+import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Response;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -28,6 +30,9 @@ public interface ApiService {
 
     @GET(Constantes.CATEGORIES)
     Observable<List<Categorium>> getCategoriaByParent(@Query(Constantes.CATEGORY_BY_PARENT) int parent);
+
+    @GET(Constantes.POSTS + "?" + Constantes.POSTS_POR_PAGINA + "=" + Constantes.CINQUENTA_POSTS)
+    Single<Response<List<Post>>> getAllPosts();
 
 
 }
