@@ -87,7 +87,7 @@ public class ActivityPrincipal extends AppCompatActivity implements RecyclerView
     public void getDetalhesNoticias(Categorium article, int position) {
         //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setCategoriaEscolhida(position);
-        Log.v("posicao", String.valueOf(position));
+        //Log.v("posicao", String.valueOf(position));
         mViewModel.setMessageCategoria(article.getId());
         mViewModel.loadPostsByCategory();
         Toast.makeText(this, article.getName(), Toast.LENGTH_SHORT).show();
