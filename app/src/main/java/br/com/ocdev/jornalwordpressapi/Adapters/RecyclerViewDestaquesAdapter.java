@@ -13,35 +13,34 @@ import com.android.databinding.library.baseAdapters.BR;
 
 import java.util.List;
 
-import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post;
-import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.PostLite.PostSimple;
+import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
 import br.com.ocdev.jornalwordpressapi.R;
 
 
 //TUTORIAL 
 
 
-public class RecyclerViewPostsAdapter extends RecyclerView.Adapter<RecyclerViewPostsAdapter.MyViewHolder> {
-    private List<PostSimple> data;
+public class RecyclerViewDestaquesAdapter extends RecyclerView.Adapter<RecyclerViewDestaquesAdapter.MyViewHolder> {
+    private List<Categorium> data;
     Context context;
     private OnClickNoticia onClickNoticia;
 
 
     public interface OnClickNoticia {
-        void getDetalhesNoticias(PostSimple article);
+        void getDetalhesNoticias(Categorium article);
     }
 
 
-    public RecyclerViewPostsAdapter(OnClickNoticia onClickNoticia) {
+    public RecyclerViewDestaquesAdapter(OnClickNoticia onClickNoticia) {
         this.onClickNoticia = onClickNoticia;
     }
 
 
     @NonNull
     @Override
-    public RecyclerViewPostsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public RecyclerViewDestaquesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.recycler_view_item_noticias, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_category_list_dialog_item, parent, false);
         context = parent.getContext();
 
 
@@ -50,9 +49,9 @@ public class RecyclerViewPostsAdapter extends RecyclerView.Adapter<RecyclerViewP
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewPostsAdapter.MyViewHolder holder, int position) {
-        final PostSimple post = data.get(position);
-        holder.bind(post);
+    public void onBindViewHolder(@NonNull RecyclerViewDestaquesAdapter.MyViewHolder holder, int position) {
+        final Categorium categorium = data.get(position);
+        holder.bind(categorium);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +86,7 @@ public class RecyclerViewPostsAdapter extends RecyclerView.Adapter<RecyclerViewP
 
     }
 
-    public void setCategoriaData(List<PostSimple> data) {
+    public void setCategoriaData(List<Categorium> data) {
         this.data = data;
     }
 

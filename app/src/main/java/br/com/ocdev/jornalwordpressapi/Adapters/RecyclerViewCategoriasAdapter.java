@@ -27,7 +27,7 @@ public class RecyclerViewCategoriasAdapter extends RecyclerView.Adapter<Recycler
 
 
     public interface OnClickNoticia {
-        void getDetalhesNoticias(Categorium article);
+        void getDetalhesNoticias(Categorium article, int position);
     }
 
 
@@ -56,7 +56,7 @@ public class RecyclerViewCategoriasAdapter extends RecyclerView.Adapter<Recycler
             @Override
             public void onClick(View v) {
 
-                onClickNoticia.getDetalhesNoticias(data.get(position));
+                onClickNoticia.getDetalhesNoticias(data.get(position), position);
 
 
             }

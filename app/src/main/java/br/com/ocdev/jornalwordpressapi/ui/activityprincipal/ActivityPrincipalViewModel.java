@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Categorium;
 import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post;
+import br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.PostLite.PostSimple;
 import br.com.ocdev.jornalwordpressapi.Data.Rest.ApiService;
 import br.com.ocdev.jornalwordpressapi.Utils.ApiFactory;
 import io.reactivex.Observable;
@@ -27,8 +28,9 @@ public class ActivityPrincipalViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
     private static MutableLiveData<List<Categorium>> CategoriaList;
-    private static MutableLiveData<List<Post>> PostsList;
-    public final MutableLiveData<String> categoria = new MutableLiveData();
+    private static MutableLiveData<List<PostSimple>> PostsList;
+    public final MutableLiveData<Integer> categoria = new MutableLiveData();
+    public final MutableLiveData<Integer> posicaoCategoria = new MutableLiveData();
     private CompositeDisposable disposables = new CompositeDisposable();
 
 
@@ -50,11 +52,14 @@ public class ActivityPrincipalViewModel extends ViewModel {
         return CategoriaList;
     }
 
-    public void loadPosts() {
-        Single<Response<List<Post>>> testObservable = ApiFactory.getRequestApi().getAllPosts();
+    public void loadPostsByCategory() {
+
+
+        Single<Response<List<PostSimple>>> testObservable = ApiFactory.getRequestApi().getAllPostsByCategory(getCategoria().getValue());
         testObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<List<Post>>>() {
+                .timeout(120, TimeUnit.SECONDS)
+                .subscribe(new SingleObserver<Response<List<PostSimple>>>() {
 
 
                                @Override
@@ -63,14 +68,54 @@ public class ActivityPrincipalViewModel extends ViewModel {
                                }
 
                                @Override
-                               public void onSuccess(Response<List<Post>> value) {
+                               public void onSuccess(Response<List<PostSimple>> value) {
                                    PostsList.setValue(value.body());
+                                   Log.v("testerroloadposts", value.body().toString());
+
                                }
+
 
                                @Override
                                public void onError(Throwable e) {
-                                   Log.v("testerro", e.getMessage());
+                                   Log.v("testerroloadposts", e.toString());
+
                                }
+
+                           }
+                );
+
+
+    }
+
+    public void loadPosts() {
+
+
+        Single<Response<List<PostSimple>>> testObservable = ApiFactory.getRequestApi().getAllPosts();
+        testObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(120, TimeUnit.SECONDS)
+                .subscribe(new SingleObserver<Response<List<PostSimple>>>() {
+
+
+                               @Override
+                               public void onSubscribe(Disposable d) {
+
+                               }
+
+                               @Override
+                               public void onSuccess(Response<List<PostSimple>> value) {
+                                   PostsList.setValue(value.body());
+                                   Log.v("testerroloadposts", value.body().toString());
+
+                               }
+
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   Log.v("testerroloadposts", e.toString());
+
+                               }
+
                            }
                 );
 
@@ -114,7 +159,7 @@ public class ActivityPrincipalViewModel extends ViewModel {
         return ApiFactory.getRequestApi().getCategoriaByParent(categoriaID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .timeout(10, TimeUnit.SECONDS);
+                .timeout(300, TimeUnit.SECONDS);
 
     }
 
@@ -147,12 +192,12 @@ public class ActivityPrincipalViewModel extends ViewModel {
         return ApiFactory.getRequestApi().getCategoriaBySlug(categoriaPai)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .timeout(10, TimeUnit.SECONDS);
+                .timeout(300, TimeUnit.SECONDS);
 
     }
 
 
-    public LiveData<List<Post>> getNews() {
+    public LiveData<List<PostSimple>> getNews() {
         //if the list is null
         if (PostsList == null) {
             PostsList = new MutableLiveData<>();
@@ -165,26 +210,27 @@ public class ActivityPrincipalViewModel extends ViewModel {
         return PostsList;
     }
 
+    public LiveData<List<PostSimple>> getNewsbyCategoria() {
+        //if the list is null
+        if (PostsList == null) {
+            PostsList = new MutableLiveData<>();
 
 
+            //we will load it asynchronously from server in this method
+            loadPostsByCategory();
+        }
+
+        return PostsList;
+    }
 
 
+    public MutableLiveData<Integer> getCategoria() {
+        return categoria;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void setMessageCategoria(int idCategoria) {
+        categoria.setValue(idCategoria);
+    }
 
 
 }

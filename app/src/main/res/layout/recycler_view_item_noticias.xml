@@ -9,7 +9,7 @@
 
         <variable
             name="news"
-            type="br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.Post.Post" />
+            type="br.com.ocdev.jornalwordpressapi.Data.Model.Categoria.PostLite.PostSimple" />
 
 
     </data>
@@ -19,12 +19,14 @@
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
         android:layout_margin="8dp"
-        app:cardCornerRadius="8dp">
+        >
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <ImageView
                 android:id="@+id/imageView"
@@ -35,12 +37,13 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
+                android:background="@drawable/ic_launcher_background"
+                android:src="@{news.media.medium}"
                 app:layout_constraintEnd_toStartOf="@+id/txtTitulo"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:wpImage="@{news.links.wpFeaturedmedia.href}"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                 />
 
             <TextView
                 android:id="@+id/txtTitulo"
@@ -49,8 +52,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_weight="1"
-                android:text="@{news.}"
                 android:textColor="#000"
+
+                android:text="@{news.title.toUpperCase()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
                 tools:ignore="MissingConstraints"
@@ -64,7 +68,8 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{news.excerpt.rendered}"
+                android:maxLines="2"
+                android:text="@{news.excerpt}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitulo"
@@ -80,10 +85,25 @@
                 android:layout_marginRight="8dp"
                 android:background="#bba7ff62"
                 android:padding="8dp"
+                app:convertdatatimeUTC="@{news.dateModified}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints"
                 tools:text="data" />
+
+            <TextView
+                android:id="@+id/txtAutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="44dp"
+                android:padding="8dp"
+                android:background="#88000000"
+                android:textColor="#fff"
+                app:layout_constraintBottom_toTopOf="@+id/txtTitulo"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Autor teste" />
 
 
         </android.support.constraint.ConstraintLayout>

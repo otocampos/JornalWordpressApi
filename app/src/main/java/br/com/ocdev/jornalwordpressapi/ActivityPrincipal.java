@@ -8,9 +8,12 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class ActivityPrincipal extends AppCompatActivity implements RecyclerView
     private RecyclerView recyclerView;
     private RecyclerViewCategoriasAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Toolbar toolbar;
+    int categoriaEscolhida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +42,12 @@ public class ActivityPrincipal extends AppCompatActivity implements RecyclerView
         mAdapter = new RecyclerViewCategoriasAdapter(this);
 
         // use a linear layout manager
-        layoutManager = new GridLayoutManager(this, 3);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheetLayout));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         bottomSheetBehavior.setHideable(false);
-        bottomSheetBehavior.setPeekHeight(100);
+        bottomSheetBehavior.setPeekHeight(120);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, ActivityPrincipalFragment.newInstance())
@@ -72,15 +77,28 @@ public class ActivityPrincipal extends AppCompatActivity implements RecyclerView
             public void onChanged(@Nullable List<Categorium> responseCategorias) {
                 mAdapter.setCategoriaData(responseCategorias);
                 recyclerView.setAdapter(mAdapter);
+                toolbar.setTitle(responseCategorias.get(getCategoriaEscolhida()).getSlug());
             }
         });
     }
 
 
-
     @Override
-    public void getDetalhesNoticias(Categorium article) {
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    public void getDetalhesNoticias(Categorium article, int position) {
+        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        setCategoriaEscolhida(position);
+        Log.v("posicao", String.valueOf(position));
+        mViewModel.setMessageCategoria(article.getId());
+        mViewModel.loadPostsByCategory();
+        Toast.makeText(this, article.getName(), Toast.LENGTH_SHORT).show();
 
+    }
+
+    public int getCategoriaEscolhida() {
+        return categoriaEscolhida;
+    }
+
+    public void setCategoriaEscolhida(int categoriaEscolhida) {
+        this.categoriaEscolhida = categoriaEscolhida;
     }
 }
